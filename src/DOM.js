@@ -116,6 +116,7 @@ class DOM {
 
   rednerAllToDoPreview(base) {
     console.log(base.projects);
+    if (!base.projects.todos) return;
     base.projects.forEach((project) =>
       project.todos.forEach((todo) => this.renderToDoPreview(todo))
     );

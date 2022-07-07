@@ -2,34 +2,41 @@ import Data from './Data.js';
 import Project from './Project.js';
 import ToDo from './ToDo.js';
 import DOM from './DOM.js';
+import ObjectHelper from './LocalStorage.js';
 
 console.log('START');
-const base = new Data();
+let base = new Data();
+const helper = new ObjectHelper(base);
 
 const project1 = new Project('Project Default');
 
-const todo1 = new ToDo('1', 'odin', 'today', 'low');
-todo1.parentId = 1;
-todo1.setId(1);
-const todo2 = new ToDo('2', 'dva', 'today', 'low');
-todo2.parentId = 1;
-todo2.setId(2);
-project1.addToDo(todo1);
-project1.addToDo(todo2);
-project1.setId(1);
+// const todo1 = new ToDo('Gogogo', 'odin', 'today', 'low');
+// todo1.parentId = 1;
+// todo1.setId(1);
+// const todo2 = new ToDo('2', 'dva', 'today', 'low');
+// todo2.parentId = 1;
+// todo2.setId(2);
+// project1.addToDo(todo1);
+// project1.addToDo(todo2);
+// project1.setId(1);
 
-const project2 = new Project('Project 2');
-const todo3 = new ToDo('3', 'tri', 'today', 'high');
-todo3.parentId = 2;
-project2.addToDo(todo3);
-project2.setId(2);
+// const project2 = new Project('Project 2');
+// const todo3 = new ToDo('3', 'tri', 'today', 'high');
+// todo3.parentId = 2;
+// project2.addToDo(todo3);
+// project2.setId(2);
 
 base.addProject(project1);
 
-base.addProject(project2);
+// base.addProject(project2);
 
+if (localStorage.base && localStorage.projects && localStorage.todos) {
+  console.log(JSON.parse(localStorage.base));
+  base = helper.saveData();
+}
 base.activeProject = project1;
 let activeProject = base.activeProject;
+
 console.log(base);
 DOM.renderAllProjectPreview(base);
 DOM.rednerAllToDoPreview(base);
@@ -127,9 +134,29 @@ document.querySelector('ul').addEventListener('click', function (event) {
   DOM.toggleFinishedMark(todo);
 });
 
-const jsonsos = JSON.stringify(base);
-const unjsonsos = JSON.parse(jsonsos);
-console.log(JSON.parse(jsonsos));
-console.log(jsonsos);
-unjsonsos.projects.forEach((project) => Object.assign(project, new Project()));
-console.log(unjsonsos);
+// const jsonsos = JSON.stringify(base);
+// const unjsonsos = JSON.parse(jsonsos);
+// console.log(JSON.parse(jsonsos));
+// console.log(jsonsos);
+// unjsonsos.projects.forEach((project) => Object.assign(project, new Project()));
+// console.log(unjsonsos);
+
+// --------------------------------------------------------------------------------------------------
+
+// const test = base.projects[0].todos;
+// console.log(test);
+// const textJSON = JSON.stringify(test);
+// const halfJSON = JSON.parse(textJSON);
+// console.log(halfJSON);
+// const objArray = halfJSON.map(
+//   (todo) => new ToDo(todo.title, todo.description, todo.date, todo.priority)
+// );
+// // console.log(objArray);
+// const completeObjArray = objArray.map((obj, i) =>
+//   Object.assign(obj, halfJSON[i])
+// );
+// // console.log(completeObjArray);
+// console.log(helper);
+// console.log(helper.getToDos());
+// helper.getProjects();
+helper.saveData();
