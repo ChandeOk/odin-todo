@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+body {
+  --color1: #fcd8d4;
+  --color2: #212529;
+  --color3: #f8e2cf;
+  --color4: #f5c6aa;
+  font-family: 'Lato', sans-serif;
+}
+
 .container {
   display: grid;
   width: 100vw;
@@ -13,7 +21,7 @@
 }
 
 .top {
-  background-color: bisque;
+  background-color: var(--color4);
   grid-column: 1/-1;
   display: flex;
   align-items: center;
@@ -21,7 +29,7 @@
 }
 
 .projects {
-  background-color: brown;
+  background-color: var(--color3);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,9 +42,13 @@
 .new-todo-btn {
   margin-right: 50px;
   padding: 10px;
-  background-color: black;
-  color: wheat;
+  background-color: #212529;
+  color: var(--color1);
   cursor: pointer;
+  border-radius: 8px;
+  width: 5em;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 .project {
@@ -44,32 +56,43 @@
   flex-direction: column;
   gap: 4px;
   width: 10em;
-  height: 3em;
+  /* height: 3em; */
   margin-top: 20px;
 }
 
 .project-preview {
-  background-color: white;
+  background-color: var(--color2);
+  color: var(--color3);
+  cursor: pointer;
+  width: 10em;
+  font-size: 1.2rem;
+  font-weight: 400;
+  padding: 5px 10px;
+  border-radius: 7px;
 }
 
 .todo-preview {
   justify-self: end;
   transform: translateX(10px);
   width: 80%;
-  background-color: green;
+  background-color: var(--color4);
+  color: #212529;
+  font-weight: 900;
+  padding: 3px 5px;
+  border-radius: 5px;
 }
 
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: grey;
+  background-color: var(--color2);
 }
 
 .todos-list {
   margin-top: 5em;
   width: 80%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .todos-list ul {
@@ -84,28 +107,41 @@ main {
 }
 
 .todo {
-  background-color: aquamarine;
+  background-color: var(--color4);
   display: flex;
   justify-content: space-between;
+  /* cursor: pointer; */
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 1.5em;
+  /* align-items: center; */
+  font-size: 1.1em;
+  color: var(--color2);
 }
 .todo-full {
-  background-color: blueviolet;
+  /* border-radius: 5px; */
+  background-color: var(--color1);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 1.2em;
+  color: var(--color2);
+  padding: 5px;
 }
 
 .low {
-  border-left: 10px solid green;
+  border-left: 10px solid #b8acac;
 }
 .med {
-  border-left: 10px solid orange;
+  border-left: 10px solid rgb(134, 106, 53);
 }
 .high {
-  border-left: 10px solid orangered;
+  border-left: 10px solid rgb(134, 48, 48);
 }
 
 .new-form-container {
   width: 20%;
   height: 50%;
-  background-color: azure;
+  background-color: var(--color1);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -115,6 +151,15 @@ main {
   align-items: center;
   justify-content: center;
   gap: 20px;
+  color: var(--color2);
+  font-size: 1.5rem;
+  border-radius: 10px;
+}
+
+.new-form-container input {
+  height: 2em;
+  border: 3px solid var(--color4);
+  border-radius: 5px;
 }
 
 .new-form-container form {
@@ -124,13 +169,20 @@ main {
 }
 
 .close-form {
-  width: 2em;
-  height: 2em;
+  margin: 5px;
+  width: 1.5em;
+  height: 1.5em;
   position: fixed;
-  background-color: orangered;
+  background-color: var(--color2);
+  border-radius: 50%;
   top: 0;
   right: 0;
-  text-align: center;
+
+  color: var(--color1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .field {
@@ -139,9 +191,115 @@ main {
   gap: 5px;
 }
 
-.todo div {
+/* .todo div {
   background-color: black;
   color: wheat;
   padding: 0 30px;
   cursor: pointer;
+} */
+
+.delete {
+  background-color: var(--color2);
+  color: wheat;
+  pad: 0 30px;
+  width: 4em;
+  text-align: center;
+  cursor: pointer;
+  color: #f5c6aa;
+  border-top-right-radius: 4px;
+  border: 1px solid #f5c6aa;
+  border-radius: 5px;
+  border-bottom-right-radius: 0;
+  letter-spacing: 1px;
+}
+
+.finish {
+  background-color: var(--color2);
+  color: wheat;
+  pad: 0 30px;
+  cursor: pointer;
+  color: #f5c6aa;
+  border: 1px solid #f5c6aa;
+  border-radius: 5px;
+  width: 3.5em;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.new-project-btn {
+  align-self: center;
+  justify-self: end;
+  margin-bottom: 10em;
+  cursor: pointer;
+  height: 5em;
+  width: 10em;
+  background-color: var(--color2);
+  border: none;
+  border-radius: 7px;
+  color: var(--color3);
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.project-form {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.project-form input {
+  background-color: none;
+  border: 3px solid var(--color4);
+  width: 100%;
+  height: 15%;
+  border-radius: 6px;
+  /* outline: none; */
+}
+
+input:focus {
+  outline: #212529;
+  border: 3px solid var(--color2);
+}
+
+.projects {
+  /* height: 100%; */
+  justify-content: space-between;
+}
+
+.hidden {
+  display: none;
+}
+
+.project-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.finished {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.show-full {
+  cursor: pointer;
+  text-align: center;
+  width: 1.3em;
+  background-color: none;
+  font-weight: 900;
+  font-size: 1.2em;
+}
+
+.btns-container {
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+/* .nope {
+  text-decoration-color: aqua;
+} */
+
+.x {
+  width: min-content;
 }

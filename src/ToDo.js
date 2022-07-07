@@ -6,13 +6,17 @@ export default class ToDo {
     this.priority = priority;
     this.isFinished = false;
     this.id;
+    this.parentId;
   }
 
   markAsFinished() {
-    this.isFinished = true;
+    this.isFinished = this.isFinished === false ? true : false;
   }
 
   setId(id) {
     this.id = id;
+  }
+  setParentId(parentId) {
+    this.parentId = parentId;
   }
 }
