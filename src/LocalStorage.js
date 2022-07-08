@@ -43,6 +43,7 @@ export default class ObjectHelper {
   }
 
   saveData(base) {
+    // if (!base.projects) return;
     const baseJSON = JSON.stringify(base);
     const projectsJSON = JSON.stringify(base.projects);
     const todosJSON = JSON.stringify(

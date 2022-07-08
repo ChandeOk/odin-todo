@@ -25,7 +25,14 @@ body {
   grid-column: 1/-1;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 2.5rem;
+  margin-left: 50px;
+  color: var(--color2);
+  font-weight: 700;
 }
 
 .projects {
@@ -77,9 +84,10 @@ body {
   width: 80%;
   background-color: var(--color4);
   color: #212529;
-  font-weight: 900;
+  font-weight: 700;
   padding: 3px 5px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 main {
@@ -87,6 +95,7 @@ main {
   flex-direction: column;
   align-items: center;
   background-color: var(--color2);
+  position: relative;
 }
 
 .todos-list {
@@ -154,6 +163,7 @@ main {
   color: var(--color2);
   font-size: 1.5rem;
   border-radius: 10px;
+  z-index: 1;
 }
 
 .new-form-container input {
@@ -307,4 +317,15 @@ input:focus {
 .finished-preview {
   text-decoration: line-through;
   text-decoration-thickness: 2px;
+}
+
+.delete-project {
+  color: var(--color2);
+  position: absolute;
+  right: 2%;
+  top: 2%;
+  cursor: pointer;
+  background-color: var(--color4);
+  padding: 5px;
+  border-radius: 5px;
 }

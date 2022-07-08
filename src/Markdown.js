@@ -22,4 +22,8 @@ const formMarkdown = `<div class="field">
 <div class="close-form"><div class="x">X</div></div>
 `;
 
-export { formMarkdown };
+const generateRandomNum = () => {
+  return Math.floor(Math.random() * (999999999999999 - 1) + 1);
+};
+
+export { formMarkdown, generateRandomNum };

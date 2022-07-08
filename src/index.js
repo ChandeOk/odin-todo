@@ -3,6 +3,7 @@ import Project from './Project.js';
 import ToDo from './ToDo.js';
 import DOM from './DOM.js';
 import ObjectHelper from './LocalStorage.js';
+import { generateRandomNum } from './Markdown.js';
 
 const initDefaultProject = () => {
   const project1 = new Project('Project Default');
@@ -26,7 +27,7 @@ const handlerSubmit = function (event) {
     new FormData(this)
   );
   const todo = new ToDo(title, description, date, priority);
-  todo.setId(activeProject.todos.length + 1);
+  todo.setId(generateRandomNum());
   todo.setParentId(activeProject.id);
   activeProject.addToDo(todo);
   DOM.renderToDo(...activeProject.todos.slice(-1));
@@ -47,9 +48,10 @@ const handlerNewProject = function (event) {
   event.preventDefault();
   const projectName = this.querySelector('input').value;
   const newProject = new Project(projectName);
-  newProject.setId(base.projects.length + 1);
+  newProject.setId(generateRandomNum());
   base.addProject(newProject);
   this.querySelector('input').value = '';
+  if (btnNew.classList.contains('hidden')) btnNew.classList.remove('hidden');
 
   DOM.renderProjectPreview(newProject);
 };
@@ -61,6 +63,7 @@ const handlerChangeActivePorject = function (event) {
     (project) => project.name === activeProjectSelect.textContent
   );
   base.activeProject = activeProject;
+  if (btnNew.classList.contains('hidden')) btnNew.classList.remove('hidden');
 
   DOM.renderAllToDo(activeProject.todos);
 };
@@ -80,15 +83,39 @@ const handlerMarkAsFinished = function (event) {
   DOM.rednerAllToDoPreview(base);
   helper.saveData(base);
 };
+const handlerDeleteProject = function () {
+  base.removeProject();
+  DOM.clearAllProjectPreview();
+  DOM.renderAllProjectPreview(base);
+  DOM.rednerAllToDoPreview(base);
+  DOM.clearToDoList();
+  helper.saveData(base);
+  btnNew.classList.add('hidden');
+};
+const handlerToDoPreviewChageActive = function (event) {
+  const clicked = event.target.closest('.todo-preview');
+  if (!clicked) return;
+  activeProject = base.projects.find(
+    (project) => project.id === +clicked.dataset.parent
+  );
+  base.activeProject = activeProject;
+  if (btnNew.classList.contains('hidden')) btnNew.classList.remove('hidden');
+  DOM.renderAllToDo(activeProject.todos);
+};
 
 console.log('START');
 let base = new Data();
+
 const helper = new ObjectHelper(base);
 
 initDefaultProject();
 
 let activeProject = base.activeProject;
-base = localStorage.getItem('base') ? helper.loadData() : base;
+base =
+  localStorage.getItem('base') && localStorage.getItem('projects') !== '[]'
+    ? helper.loadData()
+    : base;
+
 activeProject = base.activeProject;
 
 initRender();
@@ -96,6 +123,7 @@ initRender();
 const btnNew = document.querySelector('.new-todo-btn');
 const formNewProject = document.querySelector('.project-form');
 const aside = document.querySelector('aside');
+const deleteProject = document.querySelector('.delete-project');
 
 //EVENT LISTENERS
 
@@ -113,3 +141,7 @@ aside.addEventListener('click', handlerChangeActivePorject);
 document.querySelector('ul').addEventListener('click', handlerShowFullInfo);
 
 document.querySelector('ul').addEventListener('click', handlerMarkAsFinished);
+
+deleteProject.addEventListener('click', handlerDeleteProject);
+
+aside.addEventListener('click', handlerToDoPreviewChageActive);
