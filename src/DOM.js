@@ -17,6 +17,7 @@ class DOM {
     title.classList.add('title-element');
     todoEl.classList.add('todo');
     title.textContent = todo.title;
+    if (todo.isFinished) title.classList.add('finished');
     todoEl.classList.add(`${todo.priority}`);
     deleteBtn.textContent = 'delete';
     deleteBtn.classList.add('delete');
@@ -33,7 +34,8 @@ class DOM {
     li.appendChild(todoEl);
 
     todoFull.classList.add('todo-full');
-    todoFull.classList.add('hidden');
+    todoFull.classList.add(`hidden`);
+    todoFull.classList.add(`${todo.isFinished ? 'finished' : 'nope'}`);
     todoFull.insertAdjacentHTML(
       'afterbegin',
       `
@@ -73,7 +75,7 @@ class DOM {
     projectEl.classList.add('project');
     const projectPreview = document.createElement('div');
     projectPreview.classList.add('project-preview');
-    console.log(project.name, project);
+
     projectPreview.textContent = `${project.name}`;
     projectEl.setAttribute('data-id', `${project.id}`);
 
@@ -84,7 +86,6 @@ class DOM {
   }
 
   renderToDoPreview(todo) {
-    console.log('render start');
     const todoPreviewEl = document.createElement('div');
     todoPreviewEl.classList.add('todo-preview');
     todoPreviewEl.textContent = `${todo.title}`;
@@ -106,7 +107,6 @@ class DOM {
   }
 
   todoShow(todo) {
-    console.log(todo);
     todo.classList.toggle('hidden');
   }
 
@@ -115,11 +115,6 @@ class DOM {
   }
 
   rednerAllToDoPreview(base) {
-    console.log(base.projects);
-    // if (!base.projects.todos) return;
-    // base.projects.forEach((project) =>
-    //   project.todos.forEach((todo) => this.renderToDoPreview(todo))
-    // );
     for (let i = 0; i < base.projects.length; i++) {
       base.projects[i].todos.forEach((todo) => this.renderToDoPreview(todo));
     }
