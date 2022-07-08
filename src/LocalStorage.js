@@ -7,13 +7,15 @@ export default class ObjectHelper {
     this.base = base;
     this.projects = base.projects;
     this.todos = this.projects.map((project) => project.todos);
+    this.baseResult;
   }
 
   getToDos(todosJSON) {
-    // this.todos = this.projects.map((project) => project.todos);
+    this.todos = this.projects.map((project) => project.todos);
     // console.log(this.todos);
     // const JSONstring = JSON.stringify(this.todos);
     const result = JSON.parse(todosJSON);
+    const result2 = JSON.parse(todosJSON);
     // console.log(result);
 
     for (let i = 0; i < result.length; i++) {
@@ -23,7 +25,7 @@ export default class ObjectHelper {
     }
     for (let i = 0; i < result.length; i++) {
       result[i] = result[i].map((obj, index) =>
-        Object.assign(obj, this.todos[i][index])
+        Object.assign(obj, result2[i][index])
       );
     }
     // console.log(result);
@@ -34,11 +36,12 @@ export default class ObjectHelper {
     // const JSONprojects = JSON.stringify(this.projects);
     let result = JSON.parse(projectsJSON);
     // console.log(this.projects);
+    console.log('--------------0-0-0-0-0-0-0-0');
+    console.log(result);
+    const result2 = result.map((project) => new Project(project.name));
+    const result3 = result2.map((obj, i) => Object.assign(obj, result[i]));
     // console.log(result);
-    result = result.map((project) => new Project(project.name));
-    result = result.map((obj, i) => Object.assign(obj, this.projects[i]));
-    // console.log(result);
-    return result;
+    return result3;
   }
 
   getBase(baseJSON) {
@@ -52,10 +55,12 @@ export default class ObjectHelper {
     return result;
   }
 
-  saveData() {
-    const baseJSON = JSON.stringify(this.base);
-    const projectsJSON = JSON.stringify(this.projects);
-    const todosJSON = JSON.stringify(this.todos);
+  saveData(base) {
+    const baseJSON = JSON.stringify(base);
+    const projectsJSON = JSON.stringify(base.projects);
+    const todosJSON = JSON.stringify(
+      base.projects.map((project) => project.todos)
+    );
 
     localStorage.setItem('base', baseJSON);
     localStorage.setItem('projects', projectsJSON);
@@ -79,12 +84,35 @@ export default class ObjectHelper {
 
     console.log('--------------------------------');
     baseResult.projects = projectsResult;
+    //TESTTTTTTTTTTTTTTTTTTTTTTT
+
+    baseResult.activeProject = baseResult.projects[0];
     console.log(baseResult);
 
     return baseResult;
   }
 
-  loadData() {}
+  loadData() {
+    const baseResult = this.getBase(localStorage.getItem('base'));
+    const projectsResult = this.getProjects(localStorage.getItem('projects'));
+    const todosResult = this.getToDos(localStorage.getItem('todos'));
+
+    console.log(todosResult);
+    console.log(projectsResult);
+    console.log(baseResult);
+
+    for (let i = 0; i < projectsResult.length; i++) {
+      projectsResult[i].todos = todosResult[i];
+    }
+
+    console.log('--------------------------------');
+    baseResult.projects = projectsResult;
+    //TESTTTTTTTTTTTTTTTTTTTTTTT
+
+    baseResult.activeProject = baseResult.projects[0];
+    console.log(baseResult);
+    return baseResult;
+  }
 }
 
 //Сначала создаем инстанс класса со свойствами из JSON =>

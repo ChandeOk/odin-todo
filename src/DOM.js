@@ -116,10 +116,13 @@ class DOM {
 
   rednerAllToDoPreview(base) {
     console.log(base.projects);
-    if (!base.projects.todos) return;
-    base.projects.forEach((project) =>
-      project.todos.forEach((todo) => this.renderToDoPreview(todo))
-    );
+    // if (!base.projects.todos) return;
+    // base.projects.forEach((project) =>
+    //   project.todos.forEach((todo) => this.renderToDoPreview(todo))
+    // );
+    for (let i = 0; i < base.projects.length; i++) {
+      base.projects[i].todos.forEach((todo) => this.renderToDoPreview(todo));
+    }
   }
 
   clearToDoPreview() {

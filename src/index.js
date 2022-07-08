@@ -4,21 +4,22 @@ import ToDo from './ToDo.js';
 import DOM from './DOM.js';
 import ObjectHelper from './LocalStorage.js';
 
+// localStorage.setItem('wtf', 'WTF?!?!?!?');
+
 console.log('START');
 let base = new Data();
-const helper = new ObjectHelper(base);
 
 const project1 = new Project('Project Default');
 
-// const todo1 = new ToDo('Gogogo', 'odin', 'today', 'low');
-// todo1.parentId = 1;
-// todo1.setId(1);
+const todo1 = new ToDo('Gogogo', 'odin', 'today', 'low');
+todo1.parentId = 1;
+todo1.setId(1);
 // const todo2 = new ToDo('2', 'dva', 'today', 'low');
 // todo2.parentId = 1;
 // todo2.setId(2);
-// project1.addToDo(todo1);
+project1.addToDo(todo1);
 // project1.addToDo(todo2);
-// project1.setId(1);
+project1.setId(1);
 
 // const project2 = new Project('Project 2');
 // const todo3 = new ToDo('3', 'tri', 'today', 'high');
@@ -30,18 +31,23 @@ base.addProject(project1);
 
 // base.addProject(project2);
 
-if (localStorage.base && localStorage.projects && localStorage.todos) {
-  console.log(JSON.parse(localStorage.base));
-  base = helper.saveData();
-}
-base.activeProject = project1;
+// base = helper.saveData();
+base.activeProject = base.projects[0];
+let helper = new ObjectHelper(base);
 let activeProject = base.activeProject;
+// helper.saveData();
+base = localStorage.getItem('base') ? helper.loadData() : base;
+// console.log(helper.loadData());
+
+activeProject = base.activeProject;
 
 console.log(base);
 DOM.renderAllProjectPreview(base);
 DOM.rednerAllToDoPreview(base);
 // DOM.renderProjectPreview(project1);
+console.log(activeProject);
 DOM.renderAllToDo(activeProject.todos);
+
 // console.log(base.projects.find((project) => project.name === 'project1'));
 
 // console.dir(base);
@@ -56,6 +62,7 @@ const aside = document.querySelector('aside');
 btnNew.addEventListener('click', function () {
   DOM.renderForm();
   document.querySelector('form').addEventListener('submit', handlerSubmit);
+  localStorage.setItem('wtf', 'WHAT THE FUCK');
 });
 
 const handlerSubmit = function (event) {
@@ -69,6 +76,8 @@ const handlerSubmit = function (event) {
   activeProject.addToDo(todo);
   DOM.renderToDo(...activeProject.todos.slice(-1));
   console.log(activeProject.todos.slice(-1));
+  // helper = new ObjectHelper(base);
+  helper.saveData(base);
   DOM.renderToDoPreview(todo);
 };
 
@@ -80,6 +89,7 @@ document.querySelector('ul').addEventListener('click', (event) => {
   selectedToDo.remove();
   DOM.clearToDoPreview();
   DOM.rednerAllToDoPreview(base);
+  helper.saveData(base);
 });
 
 formNewProject.addEventListener('submit', function (event) {
@@ -107,6 +117,7 @@ aside.addEventListener('click', function (event) {
   activeProject = base.projects.find(
     (project) => project.name === activeProjectSelect.textContent
   );
+  base.activeProject = activeProject;
   // console.log(base);
   // activeProject.todos.push(new ToDo(1, 1, 1, 'low'));
   console.log(activeProject);
@@ -132,6 +143,7 @@ document.querySelector('ul').addEventListener('click', function (event) {
   console.log(activeProject.findToDoByID(+todo.dataset.id));
   activeProject.findToDoByID(+todo.dataset.id).markAsFinished();
   DOM.toggleFinishedMark(todo);
+  helper.saveData(base);
 });
 
 // const jsonsos = JSON.stringify(base);
@@ -159,4 +171,6 @@ document.querySelector('ul').addEventListener('click', function (event) {
 // console.log(helper);
 // console.log(helper.getToDos());
 // helper.getProjects();
-helper.saveData();
+// helper.saveData();
+
+console.log(localStorage.getItem('wtf'));
