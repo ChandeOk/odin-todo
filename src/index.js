@@ -51,7 +51,7 @@ const handlerNewProject = function (event) {
   newProject.setId(generateRandomNum());
   base.addProject(newProject);
   this.querySelector('input').value = '';
-  if (btnNew.classList.contains('hidden')) btnNew.classList.remove('hidden');
+  // if (btnNew.classList.contains('hidden')) btnNew.classList.remove('hidden');
 
   DOM.renderProjectPreview(newProject);
 };
@@ -64,6 +64,7 @@ const handlerChangeActivePorject = function (event) {
   );
   base.activeProject = activeProject;
   if (btnNew.classList.contains('hidden')) btnNew.classList.remove('hidden');
+  if (!warning.classList.contains('hidden')) warning.classList.add('hidden');
 
   DOM.renderAllToDo(activeProject.todos);
 };
@@ -91,6 +92,7 @@ const handlerDeleteProject = function () {
   DOM.clearToDoList();
   helper.saveData(base);
   btnNew.classList.add('hidden');
+  warning.classList.remove('hidden');
 };
 const handlerToDoPreviewChageActive = function (event) {
   const clicked = event.target.closest('.todo-preview');
@@ -100,6 +102,7 @@ const handlerToDoPreviewChageActive = function (event) {
   );
   base.activeProject = activeProject;
   if (btnNew.classList.contains('hidden')) btnNew.classList.remove('hidden');
+  if (!warning.classList.contains('hidden')) warning.classList.add('hidden');
   DOM.renderAllToDo(activeProject.todos);
 };
 
@@ -120,6 +123,7 @@ activeProject = base.activeProject;
 
 initRender();
 
+const warning = document.querySelector('.check-project');
 const btnNew = document.querySelector('.new-todo-btn');
 const formNewProject = document.querySelector('.project-form');
 const aside = document.querySelector('aside');

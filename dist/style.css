@@ -329,3 +329,8 @@ input:focus {
   padding: 5px;
   border-radius: 5px;
 }
+
+.check-project {
+  color: var(--color1);
+  font-size: 3rem;
+}
