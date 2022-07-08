@@ -76,6 +76,8 @@ const handlerMarkAsFinished = function (event) {
   const todo = btnMarkAsFinished.closest('li');
   activeProject.findToDoByID(+todo.dataset.id).markAsFinished();
   DOM.toggleFinishedMark(todo);
+  DOM.clearToDoPreview();
+  DOM.rednerAllToDoPreview(base);
   helper.saveData(base);
 };
 

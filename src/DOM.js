@@ -89,6 +89,7 @@ class DOM {
     const todoPreviewEl = document.createElement('div');
     todoPreviewEl.classList.add('todo-preview');
     todoPreviewEl.textContent = `${todo.title}`;
+    if (todo.isFinished) todoPreviewEl.classList.add('finished-preview');
     const project = document.querySelector(
       `.project[data-id='${todo.parentId}']`
     );
@@ -128,7 +129,6 @@ class DOM {
   toggleFinishedMark(todo) {
     todo.querySelector('.title-element').classList.toggle('finished');
     todo.querySelector('.todo-full').classList.toggle('finished');
-    // todo.querySelector('.btns-container').classList.add('nope');
   }
 }
 
